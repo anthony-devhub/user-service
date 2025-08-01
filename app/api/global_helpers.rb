@@ -13,8 +13,9 @@ module GlobalHelpers
     }, code)
   end
 
-  def paginate(collection, page:, items:)
-    pagy(collection, page: page, items: items)
+  def paginate(collection, page:, limit:)
+    pagy, records = pagy(collection, page: page, limit: limit)
+    [pagy, records]
   end
 
   def pagy_metadata(pagy)
