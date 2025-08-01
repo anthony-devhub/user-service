@@ -4,11 +4,12 @@ module V1
     resource :users do
       desc 'List users'
       params do
+        optional :name, type: String
         optional :page, type: Integer, default: 1
         optional :limit, type: Integer, default: 20
       end
       get do
-        users = User.order(created_at: :desc) # or whatever your scope
+        users = User.filtered(params).order(created_at: :desc)
         pagy, records = paginate(users, page: params[:page].to_i, limit: params[:limit].to_i)
         present_paginated_success(records.to_a, pagy, "Successfully fetched users!")
       end
