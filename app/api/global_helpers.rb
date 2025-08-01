@@ -36,7 +36,7 @@ module GlobalHelpers
       data: collection,
       pagination: {
         page: pagy.page,
-        items: pagy.vars[:items],
+        items: pagy.limit,
         count: pagy.count,
         pages: pagy.pages
       }

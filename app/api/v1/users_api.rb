@@ -9,9 +9,19 @@ module V1
         optional :limit, type: Integer, default: 20
       end
       get do
-        users = User.filtered(params).order(created_at: :desc)
-        pagy, records = paginate(users, page: params[:page].to_i, limit: params[:limit].to_i)
-        present_paginated_success(records.to_a, pagy, "Successfully fetched users!")
+        cache_key = [
+          'users',
+          params[:page],
+          params[:limit],
+          params[:name],
+        ].map(&:to_s).join('-')
+
+        # Cache paginated + filtered results for 5 minutes
+        data = Rails.cache.fetch("users:index:#{cache_key}", expires_in: 5.minutes) do
+          users = User.filtered(params).order(created_at: :desc)
+          pagy, records = paginate(users, page: params[:page].to_i, limit: params[:limit].to_i)
+          present_paginated_success(records, pagy, "Successfully fetched users!")
+        end
       end
 
       desc 'Create a user'
