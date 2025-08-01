@@ -51,7 +51,7 @@ module V1
       desc 'Update a user'
       params do
         requires :id, type: String, desc: 'User ID'
-        optional :name, type: String, desc: 'User name'
+        requires :name, type: String, desc: 'User name'
       end
       put ':id' do
         user = User.find(params[:id])
