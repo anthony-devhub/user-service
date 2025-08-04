@@ -76,6 +76,37 @@ module V1
           present_error("User not found", 404)
         end
       end
+
+      desc 'List users this user follows'
+      params do
+        requires :id, type: String, desc: 'User ID'
+      end
+      get ':id/following' do
+        user = User.find(params[:id])
+
+        following_users = user.following
+
+        present_success(
+          following_users,
+          'List of users this user follows'
+        )
+      end
+
+      desc 'List users who follow this user'
+      params do
+        requires :id, type: String, desc: 'User ID'
+      end
+      get ':id/followers' do
+        user = User.find(params[:id])
+
+        followers = user.followers
+
+        present_success(
+          followers,
+          'List of users who follow this user'
+        )
+      end
+
     end
   end
 end
