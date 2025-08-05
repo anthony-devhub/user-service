@@ -88,5 +88,25 @@ RSpec.describe 'Follows API', type: :request do
       expect(response).to have_http_status(200)
       expect(Follow.with_deleted.find(follow.id).deleted_at).not_to be_nil
     end
+
+    it 'returns 404 if follower does not exist' do
+      delete '/api/v1/follows', params: {
+        follower_id: "abc",
+        followed_id: create(:user).id
+      }
+
+      expect(response).to have_http_status(:not_found)
+      expect(json['message']).to include('Follower not found')
+    end
+
+    it 'returns 404 if followed user does not exist' do
+      delete '/api/v1/follows', params: {
+        follower_id: create(:user).id,
+        followed_id: "abc"
+      }
+
+      expect(response).to have_http_status(:not_found)
+      expect(json['message']).to include('Followed user not found')
+    end
   end
 end

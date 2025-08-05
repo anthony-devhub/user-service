@@ -17,7 +17,15 @@ require 'simplecov'
 SimpleCov.start 'rails' do
   enable_coverage :branch
   add_filter '/spec/'
-  
+
+  %w[
+    app/api/base_api.rb
+    app/jobs/application_job.rb
+    app/controllers/swagger_controller.rb
+    app/controllers/application_controller.rb
+    app/mailers/application_mailer.rb
+  ].each { |path| add_filter path }
+
   add_group 'Services', 'app/services'
   add_group 'Entities', 'app/api/v1/entities'
 end
@@ -101,4 +109,3 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
-
