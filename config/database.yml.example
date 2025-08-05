@@ -9,11 +9,11 @@ default: &default
 
 development:
   <<: *default
-  database: test_prep_development
+  database: user_service_development
 
 test:
   <<: *default
-  database: test_prep_test
+  database: user_service_test
 
 production:
   primary:
