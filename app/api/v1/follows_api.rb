@@ -15,7 +15,7 @@ module V1
 
         present_success(
           V1::Entities::FollowEntity.represent(follow).as_json,
-          'Followed successfully'
+          "Followed successfully"
         )
       end
 
@@ -32,7 +32,7 @@ module V1
 
         present_success(
           V1::Entities::FollowEntity.represent(follow).as_json,
-          'Followed successfully'
+          "Followed successfully"
         )
       end
     end
